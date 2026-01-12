@@ -87,85 +87,159 @@ class _StudentsListScreenState extends State<StudentsListScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
+      appBar: AppBar(
+        backgroundColor: Colors.white,
+        elevation: 0,
+        automaticallyImplyLeading: false, // back off
+        title: const Text(
+          'Students List',
+          style: TextStyle(color: Colors.black),
+        ),
+        bottom: const PreferredSize(
+          preferredSize: Size.fromHeight(1),
+          child: Divider(
+            height: 2,
+            thickness: 1,
+            color: Colors.grey, // bottom border color
+          ),
+        ),
+      ),
+
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(16),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Text(
-                'Students List',
-                style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
-              ),
-              const SizedBox(height: 20),
-
               /// Buttons
               Row(
                 children: [
+                  // Expanded(
+                  //   child: OutlinedButton.icon(
+                  //     onPressed: _resetPage,
+                  //     icon: const Icon(Icons.refresh),
+                  //     label: const Text('Refresh'),
+                  //   ),
+                  // ),
                   Expanded(
-                    child: OutlinedButton.icon(
-                      onPressed: _resetPage,
-                      icon: const Icon(Icons.refresh),
-                      label: const Text('Refresh'),
-                    ),
-                  ),
-                  const SizedBox(width: 8),
-                  Expanded(
-                    child: OutlinedButton.icon(
-                      onPressed: () {},
-                      icon: const Icon(Icons.file_download),
-                      label: const Text('Export'),
-                    ),
-                  ),
-                  const SizedBox(width: 8),
-                  Expanded(
-                    child: OutlinedButton.icon(
-                      style: OutlinedButton.styleFrom(
-                        backgroundColor: Colors.blue,
-                        
+                    child: SizedBox(
+                      height: 50,
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor:
+                              Colors.transparent, // background null
+                          shadowColor: Colors.transparent, // shadow remove
+                          elevation: 0, // elevation off
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(6),
+                            side: const BorderSide(
+                              color: Colors.grey, // border color
+                              width: 1,
+                            ),
+                          ),
+                        ),
+                        onPressed: _resetPage,
+                        child: const Text(
+                          'Refresh',
+                          style: TextStyle(color: Colors.black), // text black
+                        ),
                       ),
-                      onPressed: () {},
-                      icon: const Icon(Icons.add,color: Colors.white,),
-                      label: const Text('Add',style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold),),
+                    ),
+                  ),
+                  const SizedBox(width: 8),
+                  Expanded(
+                    child: SizedBox(
+                      height: 50,
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor:
+                              Colors.transparent, // background null
+                          shadowColor: Colors.transparent, // shadow remove
+                          elevation: 0, // elevation off
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(6),
+                            side: const BorderSide(
+                              color: Colors.grey, // border color
+                              width: 1,
+                            ),
+                          ),
+                        ),
+                        onPressed: _resetPage,
+                        child: const Text(
+                          'Export',
+                          style: TextStyle(color: Colors.black), // text black
+                        ),
+                      ),
+                    ),
+                  ),
+
+                  const SizedBox(width: 8),
+                  Expanded(
+                    child: SizedBox(
+                      height: 50,
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.blue, // background null
+                          shadowColor: Colors.transparent, // shadow remove
+                          elevation: 0, // elevation off
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(6),
+                          ),
+                        ),
+                        onPressed: _resetPage,
+                        child: const Text(
+                          'Add Naw',
+                          style: TextStyle(color: Colors.white), // text black
+                        ),
+                      ),
                     ),
                   ),
                 ],
               ),
               const SizedBox(height: 12),
 
-              /// Filters
               Row(
                 children: [
                   Expanded(
-                    child: _dropdownButton(
-                      _selectedMonth,
-                      ['Monthly', 'Weekly', 'Daily'],
-                      (v) {
-                        _selectedMonth = v;
-                        _applyFilters();
-                      },
+                    child: SizedBox(
+                      height: 50,
+                      child: _dropdownButton(
+                        _selectedMonth,
+                        ['Monthly', 'Weekly', 'Daily'],
+                        (v) {
+                          _selectedMonth = v;
+                          _applyFilters();
+                        },
+                      ),
                     ),
                   ),
                   const SizedBox(width: 8),
                   Expanded(
-                    child: _dropdownButton(
-                      _selectedFilter,
-                      ['All', 'Active', 'Inactive'],
-                      (v) {
-                        _selectedFilter = v;
-                        _applyFilters();
-                      },
+                    child: SizedBox(
+                      height: 50,
+                      child: _dropdownButton(
+                        _selectedFilter,
+                        ['All', 'Active', 'Inactive'],
+                        (v) {
+                          _selectedFilter = v;
+                          _applyFilters();
+                        },
+                      ),
                     ),
                   ),
                   const SizedBox(width: 8),
                   Expanded(
-                    child: _dropdownButton(
-                      _selectedSort,
-                      ['Name', 'Roll No', ],
-                      (v) {
-                        _selectedSort = v;
-                        _applyFilters();
-                      },
+                    child: SizedBox(
+                      height: 50,
+                      child: _dropdownButton(
+                        _selectedSort,
+                        ['Name', 'Roll No'],
+                        (v) {
+                          _selectedSort = v;
+                          _applyFilters();
+                        },
+                      ),
                     ),
                   ),
                 ],
@@ -173,37 +247,149 @@ class _StudentsListScreenState extends State<StudentsListScreen> {
               const SizedBox(height: 12),
 
               /// Search
-              TextField(
-                controller: _searchController,
-                onChanged: (_) => _applyFilters(),
-                decoration: const InputDecoration(
-                  prefixIcon: Icon(Icons.search),
-                  hintText: 'Search student',
-                  border: OutlineInputBorder(),
+              SizedBox(
+                height: 50,
+                child: TextField(
+                  controller: _searchController,
+                  onChanged: (_) => _applyFilters(),
+                  decoration: const InputDecoration(
+                    prefixIcon: Icon(Icons.search),
+                    hintText: 'Search student',
+                    border: OutlineInputBorder(),
+                  ),
                 ),
               ),
-              const SizedBox(height: 16),
 
-              /// Table
+              Divider(),
               Expanded(
                 child: _filteredStudents.isEmpty
                     ? const Center(child: Text('No students found'))
-                    : ListView.separated(
-                        itemCount: _filteredStudents.length,
-                        separatorBuilder: (_, __) => const Divider(),
-                        itemBuilder: (_, index) {
-                          final s = _filteredStudents[index];
-                          return ListTile(
-                            title: Text(s.name),
-                            subtitle: Text(
-                              'Roll: ${s.rollNo} | ${s.monthType} | ${s.status}',
+                    : Container(
+                        margin: const EdgeInsets.all(0),
+                        decoration: BoxDecoration(
+                          border: Border.all(color: Colors.grey.shade300),
+                          borderRadius: BorderRadius.circular(4),
+                          color: Colors.white,
+                        ),
+                        child: Column(
+                          children: [
+                            // 🔹 Header
+                            Container(
+                              color: Colors.grey.shade100,
+                              padding: const EdgeInsets.symmetric(
+                                vertical: 12,
+                                horizontal: 8,
+                              ),
+                              child: Row(
+                                children: const [
+                                  Expanded(
+                                    flex: 2,
+                                    child: Text(
+                                      'Admission No',
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.w600,
+                                        color: Colors.black87,
+                                      ),
+                                    ),
+                                  ),
+                                  
+                                  Expanded(
+                                    flex: 1,
+                                    child: Text(
+                                      'Roll No',
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.w600,
+                                        color: Colors.black87,
+                                      ),
+                                    ),
+                                  ),
+                                  Expanded(
+                                    flex: 2,
+                                    child: Text(
+                                      'Name',
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.w600,
+                                        color: Colors.black87,
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
                             ),
-                            trailing: Text(
-                              s.admissionNo,
-                              style: const TextStyle(color: Colors.blue),
+
+                            const Divider(height: 1),
+
+                            // 🔹 Table Body
+                            Expanded(
+                              child: ListView.separated(
+                                itemCount: _filteredStudents.length,
+                                separatorBuilder: (_, __) => Divider(
+                                  height: 1,
+                                  color: Colors.grey.shade200,
+                                ),
+                                itemBuilder: (_, index) {
+                                  final s = _filteredStudents[index];
+                                  return Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                      vertical: 12,
+                                      horizontal: 8,
+                                    ),
+                                    child: Row(
+                                      children: [
+                                        // Admission No
+                                        Expanded(
+                                          flex: 2,
+                                          child: Text(
+                                            s.admissionNo,
+                                            style: const TextStyle(
+                                              color: Colors.blue,
+                                              fontWeight: FontWeight.w500,
+                                            ),
+                                          ),
+                                        ),
+
+                                        // Roll No (with vertical lines)
+                                        Expanded(
+                                          flex: 1,
+                                          child: Container(
+                                            // decoration: BoxDecoration(
+                                            //   border: Border(
+                                            //     left: BorderSide(
+                                            //         color: Colors.grey.shade300),
+                                            //     right: BorderSide(
+                                            //         color: Colors.grey.shade300),
+                                            //   ),
+                                            // ),
+                                            padding: const EdgeInsets.symmetric(
+                                              horizontal: 8,
+                                            ),
+                                            child: Text(
+                                              s.rollNo,
+                                              style: const TextStyle(
+                                                color: Colors.black87,
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+
+                                        // Name
+                                        Expanded(
+                                          flex: 2,
+                                          child: Text(
+                                            s.name,
+                                            style: const TextStyle(
+                                              color: Colors.black87,
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  );
+                                },
+                              ),
                             ),
-                          );
-                        },
+                          ],
+                        ),
                       ),
               ),
             ],
@@ -221,16 +407,12 @@ class _StudentsListScreenState extends State<StudentsListScreen> {
   ) {
     return DropdownButtonFormField<String>(
       value: value,
+      icon: const SizedBox.shrink(), // 🔴 icon remove
       decoration: const InputDecoration(border: OutlineInputBorder()),
       items: items
-          .map(
-            (e) => DropdownMenuItem(value: e, child: Text(e)),
-          )
+          .map((e) => DropdownMenuItem(value: e, child: Text(e)))
           .toList(),
       onChanged: (v) => onChanged(v!),
     );
   }
 }
-
-/// ===== MODEL =====
-

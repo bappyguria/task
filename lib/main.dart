@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:task/ui/screens/home/dash_bord_screen.dart';
+import 'package:task/ui/screens/auth/login/login_screen.dart';
+import 'package:task/ui/screens/auth/signup/signup_screen.dart';
 
 void main() {
   runApp(const AppDashbordApp());
@@ -18,7 +19,7 @@ class AppDashbordApp extends StatelessWidget {
         scaffoldBackgroundColor: const Color(0xFFF3F4F6),
         fontFamily: 'Roboto',
       ),
-      home: const DashboardScreen(),
+      home: const LoginScreen(),
     );
   }
 }
