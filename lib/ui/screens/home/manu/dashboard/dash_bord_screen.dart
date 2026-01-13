@@ -1,9 +1,7 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
-import 'package:task/ui/screens/home/recent_purchase/screens/recent_purchase_section.dart';
-import 'package:task/ui/screens/student/student_screen.dart';
-import 'package:task/ui/widget/dashboard_header.dart';
-import 'package:task/ui/widget/dashbord_status_gred.dart';
+import 'package:task/model/stat_item_model.dart';
+import 'package:task/ui/widget/status_card.dart';
 
 class DashboardScreen extends StatefulWidget {
   const DashboardScreen({Key? key}) : super(key: key);
@@ -13,13 +11,64 @@ class DashboardScreen extends StatefulWidget {
 }
 
 class _DashboardScreenState extends State<DashboardScreen> {
-  bool _isMenuOpen = false;
   int _currentSlide = 0;
   final List<String> _sliderImages = [
-    'https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=800',
-    'https://images.unsplash.com/photo-1464226184884-fa280b87c399?w=800',
-    'https://images.unsplash.com/photo-1523348837708-15d4a09cfac2?w=800',
+    'https://img.freepik.com/free-photo/website-hosting-concept-with-bright-light_23-2149406783.jpg?semt=ais_hybrid&w=740&q=80',
+    'https://thumbs.dreamstime.com/b/consultant-presenting-tag-cloud-information-technology-213591032.jpg',
+    'https://media.istockphoto.com/id/1830042746/photo/document-management-system-dms-with-arrange-folder-and-files-icons-man-setup-storage-backup.jpg?s=612x612&w=0&k=20&c=t8oAAO16j6fMhleAYJEXm5pSXFIDZrEG6sYJkv_Sdos=',
   ];
+
+  List<StatItem> dashboardStatsData = [
+  StatItem(
+    title: 'Total Khamari',
+    value: '120',
+    icon: Icons.people,
+    color: Colors.red,
+    progress: 70,
+    subtitle: '20 Unactive',
+  ),
+  StatItem(
+    title: 'Total Batch',
+    value: '45',
+    icon: Icons.layers,
+    color: Colors.green,
+    progress: 45,
+    subtitle: '40 Today running',
+  ),
+  StatItem(
+    title: 'Total Purchase',
+    value: '8500',
+    icon: Icons.shopping_cart,
+    color: Colors.purple,
+    progress: 80,
+    subtitle: 'Monthly target 80%',
+  ),
+  StatItem(
+    title: 'Total Sales',
+    value: '10000',
+    icon: Icons.receipt_long,
+    color: Colors.blue,
+    progress: 35,
+    subtitle: 'Sales to khamari',
+  ),
+  StatItem(
+    title: 'Sales Due',
+    value: '2000',
+    icon: Icons.attach_money,
+    color: Colors.orange,
+    progress: 25,
+    subtitle: 'Receivable from khamari',
+  ),
+  StatItem(
+    title: 'Profit/Loss',
+    value: '1500',
+    icon: Icons.trending_up,
+    color: Colors.teal,
+    progress: 65,
+    subtitle: 'Net Margin 15%',
+  ),
+];
+
 
   @override
   void initState() {
@@ -45,36 +94,22 @@ class _DashboardScreenState extends State<DashboardScreen> {
         children: [
           Column(
             children: [
-              DashboardHeader(
-                onMenuTap: () {
-                  setState(() {
-                    _isMenuOpen = true;
-                  });
-                  _showTopDialog(context, 'Menu');
-                },
-                onNotificationTap: () {},
-                onCartTap: () {},
-                onProfileTap: () {},
-              ),
               Expanded(
                 child: SingleChildScrollView(
-                  padding: const EdgeInsets.all(8),
+                  padding: const EdgeInsets.symmetric(horizontal: 8,vertical: 0),
                   child: Column(
                     children: [
                       _buildImageSlider(),
                       const SizedBox(height: 16),
-                      DashboardStatsGrid(),
+                      _buildDashbordStatusGrid(),
                       const SizedBox(height: 24),
-                      RecentPurchaseSection(),
+                      _buildRecentlyPurchaseSection(),
                       const SizedBox(height: 24),
                       _buildRecentSalesSection(),
                       const SizedBox(height: 24),
                       _buildChartsColumn(),
                       const SizedBox(height: 24),
                       _buildTopKhamariAndAlerts(),
-                      const SizedBox(height: 24),
-                      _buildScheduleAndActivity(),
-                     
                     ],
                   ),
                 ),
@@ -145,7 +180,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
           margin: const EdgeInsets.symmetric(horizontal: 8),
           decoration: BoxDecoration(
             color: Colors.white,
-            borderRadius: BorderRadius.circular(8),
+            borderRadius: BorderRadius.circular(4),
             border: Border.all(color: Colors.grey[200]!),
           ),
           child: SingleChildScrollView(
@@ -304,7 +339,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
             padding: const EdgeInsets.all(16),
             decoration: BoxDecoration(
               color: Colors.white,
-              borderRadius: BorderRadius.circular(8),
+              borderRadius: BorderRadius.circular(4),
               border: Border.all(color: Colors.grey[200]!),
             ),
             child: Column(
@@ -391,7 +426,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
             padding: const EdgeInsets.all(16),
             decoration: BoxDecoration(
               color: Colors.white,
-              borderRadius: BorderRadius.circular(8),
+              borderRadius: BorderRadius.circular(4),
               border: Border.all(color: Colors.grey[200]!),
             ),
             child: Column(
@@ -472,7 +507,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
           Container(
             decoration: BoxDecoration(
               color: Colors.white,
-              borderRadius: BorderRadius.circular(8),
+              borderRadius: BorderRadius.circular(4),
               border: Border.all(color: Colors.grey[200]!),
             ),
             child: Column(
@@ -531,7 +566,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
           Container(
             decoration: BoxDecoration(
               color: Colors.white,
-              borderRadius: BorderRadius.circular(8),
+              borderRadius: BorderRadius.circular(4),
               border: Border.all(color: Colors.grey[200]!),
             ),
             child: Column(
@@ -543,7 +578,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                   decoration: BoxDecoration(
                     color: Colors.red[50],
                     borderRadius: const BorderRadius.vertical(
-                      top: Radius.circular(8),
+                      top: Radius.circular(4),
                     ),
                   ),
                   child: const Text(
@@ -588,347 +623,271 @@ class _DashboardScreenState extends State<DashboardScreen> {
     );
   }
 
-  Widget _buildScheduleAndActivity() {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 8),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Container(
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(8),
-              border: Border.all(color: Colors.grey[200]!),
-            ),
-            child: Column(
-              children: [
-                Container(
-                  padding: const EdgeInsets.all(12),
-                  decoration: BoxDecoration(
-                    color: Colors.indigo[50],
-                    borderRadius: const BorderRadius.vertical(
-                      top: Radius.circular(8),
-                    ),
-                  ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      const Text(
-                        'Upcoming Schedule',
-                        style: TextStyle(
-                          fontSize: 12,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.indigo,
-                        ),
-                      ),
-                      Container(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 8,
-                          vertical: 2,
-                        ),
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(12),
-                          border: Border.all(color: Colors.indigo[200]!),
-                        ),
-                        child: const Text(
-                          'Today',
-                          style: TextStyle(fontSize: 9, color: Colors.indigo),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                _buildScheduleItem(
-                  'Jan',
-                  '12',
-                  'Payment Collection',
-                  'Abdur Rahman (Batch B-44)',
-                ),
-                _buildScheduleItem(
-                  'Jan',
-                  '15',
-                  'Vaccination Alert',
-                  'Salna Branch - Layer Batch',
-                ),
-              ],
-            ),
-          ),
-          const SizedBox(width: 16),
-          Container(
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(8),
-              border: Border.all(color: Colors.grey[200]!),
-            ),
-            child: Column(
-              children: [
-                Container(
-                  padding: const EdgeInsets.all(12),
-                  decoration: BoxDecoration(
-                    color: Colors.grey[50],
-                    borderRadius: const BorderRadius.vertical(
-                      top: Radius.circular(8),
-                    ),
-                  ),
-                  child: const Text(
-                    'Recent Activity',
-                    style: TextStyle(fontSize: 11, fontWeight: FontWeight.bold),
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(12),
-                  child: Column(
-                    children: [
-                      // _buildActivityItem(
-                      //     Colors.green, 'New Khamari Added: Kamal Hossain',
-                      //     '2 hours ago'),
-                      // const SizedBox(height: 12),
-                      // _buildActivityItem(
-                      //     Colors.blue, 'Purchase Invoice #0092 generated',
-                      //     '5 hours ago'),
-                      // const SizedBox(height: 12),
-                      // _buildActivityItem(
-                      //     Colors.orange, 'System backup completed',
-                      //     'Yesterday'),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildScheduleItem(
-    String month,
-    String day,
-    String title,
-    String subtitle,
-  ) {
-    return Padding(
-      padding: const EdgeInsets.all(12),
-      child: Row(
-        children: [
-          Container(
-            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-            decoration: BoxDecoration(
-              color: Colors.grey[100],
-              borderRadius: BorderRadius.circular(4),
-            ),
-            child: Column(
-              children: [
-                Text(
-                  month.toUpperCase(),
-                  style: const TextStyle(
-                    fontSize: 10,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.grey,
-                  ),
-                ),
-                Text(
-                  day,
-                  style: const TextStyle(
-                    fontSize: 13,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ],
-            ),
-          ),
-          const SizedBox(width: 12),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  title,
-                  style: const TextStyle(
-                    fontSize: 12,
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-                Text(
-                  subtitle,
-                  style: const TextStyle(fontSize: 10, color: Colors.grey),
-                ),
-              ],
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-//// Manu
-  void _showTopDialog(BuildContext context, String title) {
-    showDialog(
-      context: context,
-      barrierDismissible: true,
-      builder: (context) {
-        return Align(
-          alignment: Alignment.topCenter,
-          child: Material(
-            color: Colors.transparent,
-            child: Container(
-              margin: const EdgeInsets.only(top: 70, left: 16, right: 16),
-              padding: const EdgeInsets.all(16),
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(12),
-                boxShadow: const [
-                  BoxShadow(
-                    color: Colors.black26,
-                    blurRadius: 8,
-                    offset: Offset(0, 4),
-                  ),
-                ],
-              ),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.start,
+  Widget _buildRecentlyPurchaseSection() {
+    return Column(
+      children: [
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 8),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Row(
                 children: [
-                  /// ===== Header =====
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        title,
-                        style: const TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      IconButton(
-                        icon: const Icon(Icons.close),
-                        onPressed: () => Navigator.pop(context),
-                      ),
-                    ],
-                  ),
-
-                  const Divider(),
-
-                  SizedBox(
-                    height: 220,
-                    child: GridView.count(
-                      crossAxisCount: 4,
-                      mainAxisSpacing: 16,
-                      crossAxisSpacing: 12,
-                      children: [
-                        _menuGridItem(
-                          () {
-                            print('Dashbord');
-                            Navigator.pop(context);
-                          },
-                          Icons.dashboard,
-                          'Dashbore',
-                        ),
-
-                        _menuGridItem(
-                          () {
-                            print('Student');
-                            Navigator.pop(context);
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => StudentsListScreen(),
-                              ),
-                            );
-                          },
-                          Icons.star_rounded,
-                          'Student',
-                        ),
-
-                        _menuGridItem(
-                          () {
-                            Navigator.pop(context);
-                          },
-                          Icons.attach_money,
-                          'Three',
-                        ),
-
-                        _menuGridItem(
-                          () {
-                            Navigator.pop(context);
-                          },
-                          Icons.person,
-                          'Four',
-                        ),
-
-                        _menuGridItem(
-                          () {
-                            Navigator.pop(context);
-                          },
-                          Icons.layers,
-                          'Five',
-                        ),
-
-                        _menuGridItem(
-                          () {
-                            Navigator.pop(context);
-                          },
-                          Icons.store,
-                          'Six',
-                        ),
-
-                        _menuGridItem(
-                          () {
-                            Navigator.pop(context);
-                          },
-                          Icons.category,
-                          'Seven',
-                        ),
-
-                        _menuGridItem(
-                          () {
-                            Navigator.pop(context);
-                          },
-                          Icons.settings,
-                          'Eight',
-                        ),
-                      ],
+                  Icon(Icons.shopping_cart, size: 20, color: Colors.blue),
+                  SizedBox(width: 5),
+                  Text(
+                    'Recently Purchase',
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
                     ),
                   ),
                 ],
               ),
+              Row(
+                children: [
+                  TextButton(
+                    onPressed: () {},
+                    child: const Text(
+                      'View All',
+                      style: TextStyle(
+                        fontSize: 16,
+                        color: Colors.blue,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
+        ),
+        Container(
+          margin: const EdgeInsets.symmetric(horizontal: 8),
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(8),
+            border: Border.all(color: Colors.grey[200]!),
+          ),
+          child: SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            child: DataTable(
+              headingRowHeight: 40,
+              dataRowHeight: 40,
+              columns: const [
+                DataColumn(
+                  label: Text(
+                    'Sl',
+                    style: TextStyle(
+                      fontSize: 11,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+                DataColumn(
+                  label: Text(
+                    'Date',
+                    style: TextStyle(
+                      fontSize: 11,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+                DataColumn(
+                  label: Text(
+                    'Invoice',
+                    style: TextStyle(
+                      fontSize: 11,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+                DataColumn(
+                  label: Text(
+                    'Brand',
+                    style: TextStyle(
+                      fontSize: 11,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+                DataColumn(
+                  label: Text(
+                    'Category',
+                    style: TextStyle(
+                      fontSize: 11,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+                DataColumn(
+                  label: Text(
+                    'Product',
+                    style: TextStyle(
+                      fontSize: 11,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+                DataColumn(
+                  label: Text(
+                    'Purchase',
+                    style: TextStyle(
+                      fontSize: 11,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+                DataColumn(
+                  label: Text(
+                    'Due',
+                    style: TextStyle(
+                      fontSize: 11,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+              ],
+              rows: [
+                DataRow(
+                  cells: [
+                    const DataCell(
+                      Text('01', style: TextStyle(fontSize: 11)),
+                    ),
+                    const DataCell(
+                      Text('10-Jan-26', style: TextStyle(fontSize: 11)),
+                    ),
+                    const DataCell(
+                      Text(
+                        '00001',
+                        style: TextStyle(
+                          fontSize: 11,
+                          color: Colors.blue,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                    const DataCell(
+                      Text(
+                        'CP Feed',
+                        style: TextStyle(
+                          fontSize: 11,
+                          color: Colors.teal,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                    const DataCell(
+                      Text('Poultry Feed', style: TextStyle(fontSize: 11)),
+                    ),
+                    const DataCell(
+                      Text(
+                        'CP Starter (50kg)',
+                        style: TextStyle(fontSize: 11),
+                      ),
+                    ),
+                    const DataCell(
+                      Text(
+                        '3,200',
+                        style: TextStyle(
+                          fontSize: 11,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                    const DataCell(
+                      Text(
+                        '500',
+                        style: TextStyle(
+                          fontSize: 11,
+                          color: Colors.red,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                DataRow(
+                  cells: [
+                    const DataCell(
+                      Text('02', style: TextStyle(fontSize: 11)),
+                    ),
+                    const DataCell(
+                      Text('09-Jan-26', style: TextStyle(fontSize: 11)),
+                    ),
+                    const DataCell(
+                      Text(
+                        '00002',
+                        style: TextStyle(
+                          fontSize: 11,
+                          color: Colors.blue,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                    const DataCell(
+                      Text(
+                        'CP Feed',
+                        style: TextStyle(
+                          fontSize: 11,
+                          color: Colors.teal,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                    const DataCell(
+                      Text('Medicine', style: TextStyle(fontSize: 11)),
+                    ),
+                    const DataCell(
+                      Text('Renamycin Sol.', style: TextStyle(fontSize: 11)),
+                    ),
+                    const DataCell(
+                      Text(
+                        '1,200',
+                        style: TextStyle(
+                          fontSize: 11,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                    const DataCell(
+                      Text(
+                        'Paid',
+                        style: TextStyle(
+                          fontSize: 11,
+                          color: Colors.green,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ],
             ),
           ),
-        );
+        ),
+      ],
+    );
+  }
+
+Widget _buildDashbordStatusGrid () {
+    return GridView.builder(
+      shrinkWrap: true,
+      physics: const NeverScrollableScrollPhysics(),
+      padding: const EdgeInsets.symmetric(horizontal: 8),
+      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+        crossAxisCount: 2,
+        childAspectRatio: 2,
+        crossAxisSpacing: 12,
+        mainAxisSpacing: 12,
+      ),
+      itemCount: dashboardStatsData.length,
+      itemBuilder: (context, index) {
+        final item = dashboardStatsData[index];
+        return StatCard(item: item);
       },
     );
   }
-
-  Widget _menuGridItem(
-    VoidCallback? onTap,
-    IconData icon,
-    String title, [
-    Color iconColor = Colors.blue,
-  ]) {
-    return InkWell(
-      onTap: onTap,
-      borderRadius: BorderRadius.circular(12),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Container(
-            padding: const EdgeInsets.all(12),
-            decoration: BoxDecoration(
-              color: iconColor.withOpacity(0.15),
-              shape: BoxShape.circle,
-            ),
-            child: Icon(icon, size: 22, color: iconColor),
-          ),
-          const SizedBox(height: 6),
-          Text(
-            title,
-            textAlign: TextAlign.center,
-            style: const TextStyle(fontSize: 11, fontWeight: FontWeight.w600),
-          ),
-        ],
-      ),
-    );
-  }
-
 }
+
+

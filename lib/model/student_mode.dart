@@ -4,6 +4,8 @@ class Student {
   final String name;
   final String monthType;
   final String status;
+  final String hove;
+  final String phone;
 
   Student(
     this.admissionNo,
@@ -11,5 +13,7 @@ class Student {
     this.name,
     this.monthType,
     this.status,
+    this.hove,
+    this.phone
   );
 }

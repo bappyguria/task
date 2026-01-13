@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:task/ui/screens/auth/login/login_screen.dart';
-import 'package:task/ui/screens/auth/signup/signup_screen.dart';
+import 'package:get/get.dart';
+import 'package:task/core/binding/app_binding.dart';
+import 'package:task/core/theme/app_theme.dart';
+import 'package:task/routs/app_pages.dart';
+import 'package:task/routs/app_routes.dart';
 
 void main() {
   runApp(const AppDashbordApp());
@@ -11,16 +14,14 @@ class AppDashbordApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return GetMaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'CP Contact Farming',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-        scaffoldBackgroundColor: const Color(0xFFF3F4F6),
-        fontFamily: 'Roboto',
-      ),
-      home: const LoginScreen(),
+      theme: AppTheme.lightTheme,
+      initialRoute: AppRoutes.login,
+      getPages: AppPages.routes,
+      initialBinding: AppBinding(),
+      smartManagement: SmartManagement.full,
     );
   }
 }
-
